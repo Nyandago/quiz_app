@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +33,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Icon> scoreKeeper = [];
+
+  void checkAnswer(bool userCheckedAnswer) {
+    bool correctAnswer = quizBrain.getCorrectAnswer();
+
+    setState(() {
+      if (quizBrain.isFinished() == true) {
+        //alert you,ve reached at the end of the quiz
+        print('reached the end of the quiz');
+
+        quizBrain.reset();
+
+        scoreKeeper = [];
+      } else {
+        if (userCheckedAnswer == correctAnswer) {
+          scoreKeeper.add(
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          scoreKeeper.add(
+            const Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
+        quizBrain.nextQuestion();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +77,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Expanded(
+            Expanded(
                 child: Text(
-              'This is the Question place, all questions will be displayed here',
+              quizBrain.getQuestionText(),
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 29,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -71,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       primary: Colors.white,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      checkAnswer(true);
+                    },
                     child: const Text('TRUE'),
                   ),
                 ],
@@ -99,23 +138,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       primary: Colors.white,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      checkAnswer(true);
+                    },
                     child: const Text('FALSE'),
                   ),
                 ],
               ),
             ]),
             Row(
-              children: const [
-                Icon(
-                  Icons.check,
-                  color: Colors.green,
-                ),
-                Icon(
-                  Icons.close,
-                  color: Colors.red,
-                )
-              ],
+              children: scoreKeeper,
             ),
           ],
         ),
