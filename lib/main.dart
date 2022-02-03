@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.green,
                 ),
                 Icon(
-                  Icons.check,
+                  Icons.close,
                   color: Colors.red,
                 )
               ],
