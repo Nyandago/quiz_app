@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Quiz Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -41,8 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Expanded(
                 child: Text(
-              'This is the Question',
+              'This is the Question place, all questions will be displayed here',
+              textAlign: TextAlign.center,
               style: TextStyle(
+                fontSize: 29,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -92,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(12.0),
                       primary: Colors.white,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
