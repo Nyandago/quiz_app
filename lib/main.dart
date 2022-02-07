@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if (quizBrain.isFinished() == true) {
         //alert you,ve reached at the end of the quiz
-        print('reached the end of the quiz');
+        showAlertDialog(context);
 
         quizBrain.reset();
 
@@ -154,4 +154,31 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  Widget okButton = TextButton(
+    child: const Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: const Text("Quiz Completed"),
+    content: const Text("Congrats!! You have reached the end of the quiz."),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
